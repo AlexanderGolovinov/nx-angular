@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import {Component, OnInit} from '@angular/core';
+import {Store} from '@ngrx/store';
 import {
   addToReadingList,
   clearSearch,
   getAllBooks,
   ReadingListBook,
-  searchBooks
+  searchBooks, undoAddToReadingList,
 } from '@tmo/books/data-access';
-import { FormBuilder } from '@angular/forms';
-import { Book } from '@tmo/shared/models';
+import {FormBuilder} from '@angular/forms';
+import {Book, ReadingListItem} from '@tmo/shared/models';
+import {NotificationService} from "../services/notification.service";
 
 @Component({
   selector: 'tmo-book-search',
@@ -24,7 +25,8 @@ export class BookSearchComponent implements OnInit {
 
   constructor(
     private readonly store: Store,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly notificationService: NotificationService
   ) {}
 
   get searchTerm(): string {
@@ -44,7 +46,23 @@ export class BookSearchComponent implements OnInit {
   }
 
   addBookToReadingList(book: Book) {
-    this.store.dispatch(addToReadingList({ book }));
+    this.store.dispatch(addToReadingList({book}));
+    this.notificationService
+      .openSnackBar('Book added', 'Undo')
+      .onAction()
+      .subscribe(() => {
+        this.store.dispatch(undoAddToReadingList({
+          item: {
+            bookId: book.id,
+            title: book.title,
+            authors: book.authors,
+            description: book.description,
+            publisher: book.publisher,
+            publishedDate: book.publishedDate,
+            coverUrl: book.coverUrl,
+          } as ReadingListItem
+        }));
+      });
   }
 
   searchExample() {
