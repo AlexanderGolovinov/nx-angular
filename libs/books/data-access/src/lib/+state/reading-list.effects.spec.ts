@@ -30,7 +30,7 @@ describe('ToReadEffects', () => {
   describe('loadReadingList$', () => {
     it('should work', done => {
       actions = new ReplaySubject();
-      actions.next(ReadingListActions.init());
+      actions.next(ReadingListActions.initReadingList());
 
       effects.loadReadingList$.subscribe(action => {
         expect(action).toEqual(

@@ -1,14 +1,14 @@
 import { createAction, props } from '@ngrx/store';
 import { Book, ReadingListItem } from '@tmo/shared/models';
 
-export const init = createAction('[Reading List] Initialize');
+export const initReadingList = createAction('[Reading List] Initialize');
 
 export const loadReadingListSuccess = createAction(
   '[Reading List API] Load list success',
   props<{ list: ReadingListItem[] }>()
 );
-export const loadReadingListError = createAction(
-  '[Reading List API] Load list error',
+export const loadReadingListFailure = createAction(
+  '[Reading List API] Load list failure',
   props<{ error: string }>()
 );
 
@@ -17,14 +17,14 @@ export const addToReadingList = createAction(
   props<{ book: Book }>()
 );
 
-export const failedAddToReadingList = createAction(
-  '[Reading List API] Failed add to list',
+export const addToReadingListSuccess = createAction(
+  '[Reading List API] Add to list success',
   props<{ book: Book }>()
 );
 
-export const confirmedAddToReadingList = createAction(
-  '[Reading List API] Confirmed add to list',
-  props<{ book: Book }>()
+export const addToReadingListFailure = createAction(
+  '[Reading List API] Add to list failure',
+  props<{ error: any }>()
 );
 
 export const removeFromReadingList = createAction(
@@ -32,12 +32,12 @@ export const removeFromReadingList = createAction(
   props<{ item: ReadingListItem }>()
 );
 
-export const failedRemoveFromReadingList = createAction(
-  '[Reading List API] Failed remove from list',
+export const removeFromReadingListSuccess = createAction(
+  '[Reading List API] Remove from list success',
   props<{ item: ReadingListItem }>()
 );
 
-export const confirmedRemoveFromReadingList = createAction(
-  '[Reading List API] Confirmed remove from list',
-  props<{ item: ReadingListItem }>()
+export const removeFromReadingListFailure = createAction(
+  '[Reading List API] Remove from list failure',
+  props<{ error: any }>()
 );
