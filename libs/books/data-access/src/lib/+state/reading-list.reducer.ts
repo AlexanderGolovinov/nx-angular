@@ -78,7 +78,25 @@ const readingListReducer = createReducer(
       loading: false,
       error
     }),
-  )
+  ),
+  on(ReadingListActions.markBooksAsFinished, (state) => ({
+      ...state,
+      loading: true,
+    }),
+  ),
+  on(ReadingListActions.markBooksAsFinishedSuccess, (state, action) =>
+    readingListAdapter.upsertOne({
+      ...action.item,
+      finished: true,
+      finishedDate: new Date().toISOString(),
+    }, {...state, loading: false})
+  ),
+  on(ReadingListActions.markBooksAsFinishedFailure, (state, {error}) => ({
+      ...state,
+      loading: false,
+      error
+    }),
+  ),
 );
 
 export function reducer(state: State | undefined, action: Action) {
