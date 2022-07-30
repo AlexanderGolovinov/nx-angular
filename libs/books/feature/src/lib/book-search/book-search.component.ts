@@ -7,6 +7,7 @@ import {
   ReadingListBook,
   searchBooks, undoAddToReadingList,
 } from '@tmo/books/data-access';
+import {debounceTime, distinctUntilChanged} from "rxjs/operators";
 import {FormBuilder} from '@angular/forms';
 import {Book, ReadingListItem} from '@tmo/shared/models';
 import {NotificationService} from "../services/notification.service";
@@ -37,6 +38,16 @@ export class BookSearchComponent implements OnInit {
     this.store.select(getAllBooks).subscribe(books => {
       this.books = books;
     });
+
+    this.searchForm
+      .get('term').valueChanges
+      .pipe(debounceTime(500), distinctUntilChanged((prev: string, curr: string) => {
+        //If just space is added, the search didnt change. Skip api call.
+        return curr.trim() === prev
+      }))
+      .subscribe(() => {
+        this.searchBooks();
+    })
   }
 
   formatDate(date: void | string) {
