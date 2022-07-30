@@ -34,6 +34,7 @@
 }
 
 .reading-list-item--details--title,
+.reading-list-item--details--finished-date,
 .reading-list-item--details--author {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -44,4 +45,9 @@
   font-weight: 100;
   font-size: 1rem;
   color: $gray60;
+}
+
+.book-finished {
+  padding: 5px;
+  background-color: darkseagreen;
 }

@@ -33,7 +33,7 @@ export const undoAddToReadingList = createAction(
 );
 
 export const removeFromReadingList = createAction(
-  '[Books Search Results] Remove from list',
+  '[Reading List Sidenav] Remove from list',
   props<{ item: ReadingListItem }>()
 );
 
@@ -50,4 +50,19 @@ export const removeFromReadingListFailure = createAction(
 export const undoRemoveFromReadingList = createAction(
   '[Books Search Results] Undo remove from list',
   props<{ book: Book }>()
+);
+
+export const markBooksAsFinished = createAction(
+  '[Reading List Sidenav] Mark books as finished',
+  props<{ item: ReadingListItem }>()
+);
+
+export const markBooksAsFinishedSuccess = createAction(
+  '[Reading List API] Mark books as finished success',
+  props<{ item: ReadingListItem }>()
+);
+
+export const markBooksAsFinishedFailure = createAction(
+  '[Reading List API] Mark books as finished failure',
+  props<{ error: any }>()
 );

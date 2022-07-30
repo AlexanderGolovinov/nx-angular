@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {getReadingList, removeFromReadingList, undoRemoveFromReadingList} from '@tmo/books/data-access';
+import {
+  getReadingList,
+  removeFromReadingList,
+  undoRemoveFromReadingList,
+  markBooksAsFinished
+} from '@tmo/books/data-access';
 import {NotificationService} from "../services/notification.service";
 import {Book} from "@tmo/shared/models";
 
@@ -35,5 +40,9 @@ export class ReadingListComponent {
           } as Book
         }));
       });
+  }
+
+  markBooksAsFinished(item) {
+    this.store.dispatch(markBooksAsFinished({ item}))
   }
 }

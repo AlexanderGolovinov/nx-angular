@@ -76,7 +76,7 @@ describe('Books Reducer', () => {
       expect(result.error).toEqual(ERROR);
     });
 
-    it('removeFromReadingList should set loading true and error', () => {
+    it('removeFromReadingList should set loading true', () => {
       const action = ReadingListActions.removeFromReadingList({
         item: createReadingListItem('A')
       });
@@ -100,6 +100,35 @@ describe('Books Reducer', () => {
 
     it('removeFromReadingListFailure should set error', () => {
       const action = ReadingListActions.removeFromReadingListFailure({
+        error: ERROR
+      });
+
+      const result: State = reducer(state, action);
+
+      expect(result.error).toEqual(ERROR);
+    });
+    it('markBooksAsFinished should set loading true', () => {
+      const action = ReadingListActions.markBooksAsFinished({
+        item: createReadingListItem('A')
+      });
+
+      const result: State = reducer(state, action);
+
+      expect(result.loading).toBeTruthy();
+    });
+    it('markBooksAsFinishedSuccess should set loading false and update reading list entity', () => {
+      const item = createReadingListItem('A')
+      const action = ReadingListActions.markBooksAsFinishedSuccess({
+        item: item
+      });
+
+      const result: State = reducer(state, action);
+
+      expect(result.entities['A'].finished).toBeTruthy();
+      expect(result.loading).toBeFalsy();
+    });
+    it('markBooksAsFinishedFailure should set error', () => {
+      const action = ReadingListActions.markBooksAsFinishedFailure({
         error: ERROR
       });
 

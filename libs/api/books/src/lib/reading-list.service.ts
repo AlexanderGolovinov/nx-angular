@@ -28,4 +28,17 @@ export class ReadingListService {
       return list.filter(x => x.bookId !== id);
     });
   }
+
+  async markBookFinished(bookItem: ReadingListItem): Promise<void> {
+    this.storage.update(list => {
+      const bookIndex = list.findIndex(b => b.bookId === bookItem.bookId);
+      if (bookIndex !== -1) {
+        const book = list[bookIndex];
+        book.finished = true;
+        book.finishedDate = new Date().toISOString();
+        list[bookIndex] = book;
+        return list;
+      }
+    });
+  }
 }
