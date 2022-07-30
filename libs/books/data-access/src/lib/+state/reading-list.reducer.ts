@@ -65,6 +65,11 @@ const readingListReducer = createReducer(
       error,
     }),
   ),
+  on(ReadingListActions.undoRemoveFromReadingList, (state) => ({
+      ...state,
+      loading: true,
+    }),
+  ),
   on(ReadingListActions.removeFromReadingList, (state) => ({
       ...state,
       loading: true,
@@ -95,6 +100,11 @@ const readingListReducer = createReducer(
       ...state,
       loading: false,
       error
+    }),
+  ),
+  on(ReadingListActions.undoAddToReadingList, (state) => ({
+      ...state,
+      loading: true,
     }),
   ),
 );
