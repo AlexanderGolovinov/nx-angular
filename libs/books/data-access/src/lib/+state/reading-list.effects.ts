@@ -10,14 +10,14 @@ import * as ReadingListActions from './reading-list.actions';
 export class ReadingListEffects implements OnInitEffects {
   loadReadingList$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ReadingListActions.init),
+      ofType(ReadingListActions.initReadingList),
       exhaustMap(() =>
         this.http.get<ReadingListItem[]>('/api/reading-list').pipe(
           map((data) =>
             ReadingListActions.loadReadingListSuccess({ list: data })
           ),
           catchError((error) =>
-            of(ReadingListActions.loadReadingListError({ error }))
+            of(ReadingListActions.loadReadingListFailure({ error }))
           )
         )
       )
@@ -29,9 +29,9 @@ export class ReadingListEffects implements OnInitEffects {
       ofType(ReadingListActions.addToReadingList),
       concatMap(({ book }) =>
         this.http.post('/api/reading-list', book).pipe(
-          map(() => ReadingListActions.confirmedAddToReadingList({ book })),
-          catchError(() =>
-            of(ReadingListActions.failedAddToReadingList({ book }))
+          map(() => ReadingListActions.addToReadingListSuccess({ book })),
+          catchError((error) =>
+            of(ReadingListActions.addToReadingListFailure({ error }))
           )
         )
       )
@@ -44,10 +44,10 @@ export class ReadingListEffects implements OnInitEffects {
       concatMap(({ item }) =>
         this.http.delete(`/api/reading-list/${item.bookId}`).pipe(
           map(() =>
-            ReadingListActions.confirmedRemoveFromReadingList({ item })
+            ReadingListActions.removeFromReadingListSuccess({ item })
           ),
-          catchError(() =>
-            of(ReadingListActions.failedRemoveFromReadingList({ item }))
+          catchError((error) =>
+            of(ReadingListActions.removeFromReadingListFailure({ error }))
           )
         )
       )
@@ -55,7 +55,7 @@ export class ReadingListEffects implements OnInitEffects {
   );
 
   ngrxOnInitEffects() {
-    return ReadingListActions.init();
+    return ReadingListActions.initReadingList();
   }
 
   constructor(private actions$: Actions, private http: HttpClient) {}

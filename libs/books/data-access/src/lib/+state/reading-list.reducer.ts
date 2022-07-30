@@ -1,12 +1,13 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+import {Action, createReducer, on} from '@ngrx/store';
+import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
 
 import * as ReadingListActions from './reading-list.actions';
-import { ReadingListItem } from '@tmo/shared/models';
+import {ReadingListItem} from '@tmo/shared/models';
 
 export const READING_LIST_FEATURE_KEY = 'readingList';
 
 export interface State extends EntityState<ReadingListItem> {
+  loading: boolean;
   loaded: boolean;
   error: null | string;
 }
@@ -15,20 +16,19 @@ export interface ReadingListPartialState {
   readonly [READING_LIST_FEATURE_KEY]: State;
 }
 
-export const readingListAdapter: EntityAdapter<ReadingListItem> = createEntityAdapter<
-  ReadingListItem
->({
+export const readingListAdapter: EntityAdapter<ReadingListItem> = createEntityAdapter<ReadingListItem>({
   selectId: item => item.bookId
 });
 
 export const initialState: State = readingListAdapter.getInitialState({
+  loading: true,
   loaded: false,
   error: null
 });
 
 const readingListReducer = createReducer(
   initialState,
-  on(ReadingListActions.init, state => {
+  on(ReadingListActions.initReadingList, state => {
     return {
       ...state,
       loaded: false,
@@ -41,17 +41,43 @@ const readingListReducer = createReducer(
       loaded: true
     });
   }),
-  on(ReadingListActions.loadReadingListError, (state, action) => {
+  on(ReadingListActions.loadReadingListFailure, (state, action) => {
     return {
       ...state,
       error: action.error
     };
   }),
-  on(ReadingListActions.addToReadingList, (state, action) =>
-    readingListAdapter.addOne({ bookId: action.book.id, ...action.book }, state)
+  on(ReadingListActions.addToReadingList, (state) => ({
+      ...state,
+      loading: true,
+      error: null
+    }),
   ),
-  on(ReadingListActions.removeFromReadingList, (state, action) =>
-    readingListAdapter.removeOne(action.item.bookId, state)
+  on(ReadingListActions.addToReadingListSuccess, (state, action) =>
+    readingListAdapter.addOne({bookId: action.book.id, ...action.book}, {
+      ...state,
+      loading: false
+    }),
+  ),
+  on(ReadingListActions.addToReadingListFailure, (state, {error}) => ({
+      ...state,
+      loading: false,
+      error,
+    }),
+  ),
+  on(ReadingListActions.removeFromReadingList, (state) => ({
+      ...state,
+      loading: true,
+    }),
+  ),
+  on(ReadingListActions.removeFromReadingListSuccess, (state, action) =>
+    readingListAdapter.removeOne(action.item.bookId, {...state, loading: false})
+  ),
+  on(ReadingListActions.removeFromReadingListFailure, (state, {error}) => ({
+      ...state,
+      loading: false,
+      error
+    }),
   )
 );
 
