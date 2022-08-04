@@ -42,7 +42,7 @@
     "shared-models": {
       "tags": []
     },
-    "books-feature": {
+    "books-feature-search": {
       "tags": []
     },
     "books-data-access": {
@@ -52,6 +52,18 @@
       "tags": []
     },
     "api-books": {
+      "tags": []
+    },
+    "books-ui": {
+      "tags": []
+    },
+    "books-portal": {
+      "tags": []
+    },
+    "shared-components": {
+      "tags": []
+    },
+    "shared-frame": {
       "tags": []
     }
   },
