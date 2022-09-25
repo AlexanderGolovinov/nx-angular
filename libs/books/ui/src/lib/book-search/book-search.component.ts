@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {
-  addToReadingList,
+  addToReadingList, BooksFacade,
   clearSearch,
-  getAllBooks,
+  getAllBooks, loadBooksDetails,
   ReadingListBook,
   searchBooks, undoAddToReadingList,
 } from '@tmo/books/data-access';
@@ -11,6 +11,7 @@ import {debounceTime, distinctUntilChanged} from "rxjs/operators";
 import {FormBuilder} from '@angular/forms';
 import {Book, ReadingListItem} from '@tmo/shared/models';
 import {NotificationService} from "@tmo/shared/components";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'tmo-book-search',
@@ -27,7 +28,9 @@ export class BookSearchComponent implements OnInit {
   constructor(
     private readonly store: Store,
     private readonly fb: FormBuilder,
-    private readonly notificationService: NotificationService
+    private readonly notificationService: NotificationService,
+    private readonly router: Router,
+    private readonly bookFacade: BooksFacade,
   ) {}
 
   get searchTerm(): string {
@@ -87,5 +90,10 @@ export class BookSearchComponent implements OnInit {
     } else {
       this.store.dispatch(clearSearch());
     }
+  }
+
+  redirectBookDetails(book: ReadingListBook): void {
+    this.bookFacade.selectBook(book.id);
+    this.router.navigate(['search/details', book.id]);
   }
 }

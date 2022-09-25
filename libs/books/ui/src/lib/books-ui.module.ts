@@ -8,6 +8,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BooksDataAccessModule} from "@tmo/books/data-access";
+import { BooksDetailsComponent } from './books-details/books-details.component';
 
 @NgModule({
   imports: [
@@ -23,9 +24,11 @@ import {BooksDataAccessModule} from "@tmo/books/data-access";
   ],
   declarations: [
     BookSearchComponent,
+    BooksDetailsComponent,
   ],
   exports: [
     BookSearchComponent,
+    BooksDetailsComponent,
   ]
 })
 export class BooksUiModule {}

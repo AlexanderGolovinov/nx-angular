@@ -27,7 +27,7 @@ describe('Books Selectors', () => {
     });
 
     it("getBooksLoaded() should return the current 'loaded' status", () => {
-      const result = BooksSelectors.getBooksLoaded(state);
+      const result = BooksSelectors.getBooksLoading(state);
 
       expect(result).toBe(true);
     });

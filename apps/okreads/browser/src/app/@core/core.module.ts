@@ -29,7 +29,7 @@ const APP_PROVIDERS = [
     }
   },
   {provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS},
-  {provide: LOCALE_ID, useValue: 'et-EE'},
+  // {provide: LOCALE_ID, useValue: 'et-EE'},
   {provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR'},
 ];
 

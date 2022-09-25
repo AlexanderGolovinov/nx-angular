@@ -26,7 +26,8 @@
       "@tmo/books/ui": ["libs/books/ui/src/index.ts"],
       "@tmo/books/portal": ["libs/books/portal/src/index.ts"],
       "@tmo/shared/components": ["libs/shared/components/src/index.ts"],
-      "@tmo/shared/frame": ["libs/shared/frame/src/index.ts"]
+      "@tmo/shared/frame": ["libs/shared/frame/src/index.ts"],
+      "@tmo/books/feature-details": ["libs/books/feature-details/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
