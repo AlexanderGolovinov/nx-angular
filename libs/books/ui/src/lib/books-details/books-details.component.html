@@ -1,0 +1,22 @@
+<ng-container *ngIf="(book$ | async) as book">
+  <div class="book-grid">
+    <div class="book" data-testing="book-item">
+      <div  class="book--title">
+        {{ book.title }}
+      </div>
+      <div class="book--content">
+        <div class="book--content--cover">
+          <img [alt]="book.title" [src]="book.coverUrl" />
+        </div>
+        <div class="book--content--info">
+          <div><strong>Author:</strong> {{ book.authors.join(',') }}</div>
+          <div><strong>Publisher:</strong> {{ book.publisher }}</div>
+          <div>
+            <strong>Published:</strong> {{ formatDate(book.publishedDate) }}
+          </div>
+          <p [innerHTML]="book.description"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

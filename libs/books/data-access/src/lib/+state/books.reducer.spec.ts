@@ -1,4 +1,4 @@
-import { initialState, reducer, State } from './books.reducer';
+import { initialState, reducer, BookState } from './books.reducer';
 import * as BooksActions from './books.actions';
 import { createBook } from '@tmo/shared/testing';
 
@@ -8,7 +8,7 @@ describe('Books Reducer', () => {
       const books = [createBook('A'), createBook('B'), createBook('C')];
       const action = BooksActions.searchBooksSuccess({ books });
 
-      const result: State = reducer(initialState, action);
+      const result: BookState = reducer(initialState, action);
 
       expect(result.loaded).toBe(true);
       expect(result.ids.length).toBe(3);

@@ -6,6 +6,7 @@ import * as fromBooks from './+state/books.reducer';
 import { BooksEffects } from './+state/books.effects';
 import * as fromReadingList from './+state/reading-list.reducer';
 import { ReadingListEffects } from './+state/reading-list.effects';
+import { BooksFacade } from './+state/books.facade';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ReadingListEffects } from './+state/reading-list.effects';
       fromReadingList.READING_LIST_FEATURE_KEY,
       fromReadingList.reducer
     ),
-    EffectsModule.forFeature([BooksEffects, ReadingListEffects])
-  ]
+    EffectsModule.forFeature([BooksEffects, ReadingListEffects]),
+  ],
+  providers: [BooksFacade]
 })
 export class BooksDataAccessModule {}

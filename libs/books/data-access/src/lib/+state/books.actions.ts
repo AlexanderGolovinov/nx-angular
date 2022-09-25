@@ -12,7 +12,22 @@ export const searchBooksSuccess = createAction(
 );
 
 export const searchBooksFailure = createAction(
-  '[Book Search API] Search failure',
+  '[Book Search API] Search Failure',
+  props<{ error: any }>()
+);
+
+export const loadBooksDetails = createAction(
+  '[Books Search Page] Load Book Details',
+  props<{ bookId: string }>()
+);
+
+export const loadBooksDetailsSuccess = createAction(
+  '[Book Search API] Details Action Success',
+  props<{ book: Book }>()
+);
+
+export const loadBooksDetailsFailure = createAction(
+  '[Book Search API] SDetails Action Failure',
   props<{ error: any }>()
 );
 
