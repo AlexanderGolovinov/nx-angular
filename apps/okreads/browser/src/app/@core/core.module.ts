@@ -6,6 +6,7 @@ import {StoreModule} from "@ngrx/store";
 import {environment} from "../../environments/environment";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {EffectsModule} from "@ngrx/effects";
+import { APP_BASE_HREF } from '@angular/common';
 
 export const DATE_FORMATS = {
   parse: {
@@ -31,6 +32,7 @@ const APP_PROVIDERS = [
   {provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS},
   // {provide: LOCALE_ID, useValue: 'et-EE'},
   {provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR'},
+  {provide: APP_BASE_HREF, useValue: '/'}
 ];
 
 // @ts-ignore

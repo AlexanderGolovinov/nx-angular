@@ -14,7 +14,6 @@ export class BooksDetailsComponent {
 
   constructor(private readonly booksFacade: BooksFacade) {}
 
-
   formatDate(date: void | string) {
     return date
       ? new Intl.DateTimeFormat('en-US').format(new Date(date))

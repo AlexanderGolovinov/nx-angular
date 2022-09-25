@@ -12,7 +12,8 @@ describe('Books Selectors', () => {
         {
           ...initialState,
           error: 'Unknown error',
-          loaded: true
+          loading: false,
+          loaded: false,
         }
       )
     };
@@ -26,10 +27,10 @@ describe('Books Selectors', () => {
       expect(results.map(x => x.id)).toEqual(['A', 'B', 'C']);
     });
 
-    it("getBooksLoaded() should return the current 'loaded' status", () => {
+    it("getBooksLoaded() should return the current 'loading' status", () => {
       const result = BooksSelectors.getBooksLoading(state);
 
-      expect(result).toBe(true);
+      expect(result).toBe(false);
     });
 
     it("getBooksError() should return the current 'error' state", () => {
